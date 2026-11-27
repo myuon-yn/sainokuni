@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 スポーツエントリー「第12回 トレニックワールド 100mile＆100km in 彩の国」
 100mileソロ(A)の各区分の受付状況を監視し、LINE / ntfy に通知する。
@@ -17,25 +16,6 @@
   LINE_CHANNEL_TOKEN=xxxx LINE_USER_ID=Uxxxx NTFY_TOPIC=your-secret-topic python watch_trainic.py
   （どちらの通知先も片方だけで可）
 """
-import datetime as dt
-import os
-import time
-
-import requests
-from bs4 import BeautifulSoup
-
-URL = "https://www.sportsentry.ne.jp/event/t/107858"
-TARGET = "A）100mile"   # 100mileソロ
-EXTRA_FILTER = ""       # 例: "男子（40歳代）" で絞り込み。空なら全区分が対象
-REPORT_HOUR = 21        # 定時レポートの時刻（この時刻以降の最初の取得で送信）
-HEADERS = {"User-Agent": "Mozilla/5.0 (personal slot notifier)"}
-JST = dt.timezone(dt.timedelta(hours=9))
-
-# 認証情報は環境変数で渡す（コードに直接書かない）
-LINE_TOKEN = os.environ.get("LINE_CHANNEL_TOKEN", "")
-LINE_USER_ID = os.environ.get("LINE_USER_ID", "")
-NTFY_TOPIC = os.environ.get("NTFY_TOPIC", "")
-
 
 def now_jst() -> dt.datetime:
     return dt.datetime.now(JST)
